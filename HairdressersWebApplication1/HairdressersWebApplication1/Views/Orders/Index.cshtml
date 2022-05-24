@@ -1,0 +1,78 @@
+﻿@model IEnumerable<HairdressersWebApplication1.Order>
+
+@{
+    ViewData["Title"] = "Замовлення";
+}
+
+<h1>Замовлення</h1>
+@if (!User.IsInRole("worker"))
+{
+    <p>
+        <a asp-action="Create" asp-route-id="@ViewBag.ClientIdd">Створити</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Branch)
+            </th>
+            @if (!User.IsInRole("user"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Client)
+                </th>
+            }
+            <th>
+                @Html.DisplayNameFor(model => model.Employee)
+            </th>
+            <th>
+                <label>Повна ціна</label>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Branch.Address)
+                </td>
+                @if (!User.IsInRole("user"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Client.LastName)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee.LastName)
+                </td>
+                <td>
+                    <label>@ViewBag.OrderPrice[item.OrderId]</label>
+                </td>
+                <td>
+                    @if (User.IsInRole("user"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.OrderId" asp-route-clId="@ViewBag.ClientIdd">Змінити</a>
+                    }
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.OrderId" asp-route-clId="@ViewBag.ClientIdd">Змінити</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.OrderId">Деталі</a>
+                    @if (!User.IsInRole("worker"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.OrderId">Видалити</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

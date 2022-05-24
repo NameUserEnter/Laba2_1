@@ -1,0 +1,68 @@
+﻿@model HairdressersWebApplication1.Order
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Створення</h1>
+
+<h4>Замовлення</h4>
+
+<hr />
+@if (@ViewBag.Time != null)
+{
+    <div class="text-danger">@ViewBag.Time</div>
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="OrderDate" class="control-label"></label>
+                <input asp-for="OrderDate" class="form-control" />
+                <span asp-validation-for="OrderDate" class="text-danger"></span>
+            </div>
+            @if (User.IsInRole("admin"))
+            {
+                <div class="form-group">
+                    <label asp-for="ClientId" class="control-label"></label>
+                    <select asp-for="ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
+                </div>
+            }
+            @if (User.IsInRole("user"))
+            {
+                <input type="hidden" value="@ViewBag.ClientIdd" name="ClientId" />
+            }
+            <div class="form-group">
+                <label asp-for="EmployeeId" class="control-label"></label>
+                <select asp-for="EmployeeId" class="form-control" asp-items="ViewBag.EmployeeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BranchId" class="control-label"></label>
+                <select asp-for="BranchId" class="form-control" asp-items="ViewBag.BranchId"></select>
+            </div>
+            <div class="form-group">
+                @foreach (Service serv in ViewBag.ServiceId)
+                {
+                    <input type="checkbox" name="services" value="@serv.Title">
+
+                    @serv.Title
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Створити" class="btn btn-primary" />
+                @* <a asp-action="Edit" asp-route-id="@item.OrderId" asp-route-clId="@ViewBag.ClientIdd">Змінити</a>*@
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-ClientEmail = "@User.Identity.Name">Назад до списку</a>
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

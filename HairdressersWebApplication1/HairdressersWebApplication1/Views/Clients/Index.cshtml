@@ -1,0 +1,65 @@
+﻿@model IEnumerable<HairdressersWebApplication1.Client>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Клієнти</h1>
+
+@*<p>
+    <a asp-action="Create">Створити</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+            @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender.Gender1)
+            </td>
+            <td>
+             @*   <a asp-action="Edit" asp-route-id="@item.ClientId">Змінити</a> |
+                <a asp-action="Details" asp-route-id="@item.ClientId">Деталі</a> |*@
+                <a asp-action="Delete" asp-route-id="@item.ClientId">Видалити</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

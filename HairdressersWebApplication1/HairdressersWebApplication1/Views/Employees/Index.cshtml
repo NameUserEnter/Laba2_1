@@ -1,0 +1,67 @@
+﻿@model IEnumerable<HairdressersWebApplication1.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Працівники</h1>
+
+@*@if (User.IsInRole("admin"))
+{
+    <p>
+        <a asp-action="Create" asp-route-id="@ViewBag.EmployeeIdd">Створити новий</a>
+    </p>
+}*@
+<div class="text-danger">@ViewBag.F</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Note)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender.Gender1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                @if (User.IsInRole("admin"))
+                {
+                    <td>
+                       @* <a asp-action="Edit" asp-route-id="@item.EmployeeId">Змінити</a> |
+                        <a asp-action="Details" asp-route-id="@item.EmployeeId">Деталі</a> |*@
+                        <a asp-action="Delete" asp-route-id="@item.EmployeeId">Видалити</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
